@@ -1,6 +1,13 @@
+<script setup lang="ts">
+import { createPinia } from "pinia";
+
+const pinia = createPinia();
+</script>
+
 <template>
   <div>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>
