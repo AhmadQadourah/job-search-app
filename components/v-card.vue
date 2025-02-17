@@ -1,13 +1,13 @@
 <template>
-  <div :class="computedClasses">
+  <div :class="[computedClasses, 'flex flex-col h-full']">
     <img
       v-if="image"
       :src="image"
       :alt="title"
-      class="w-full h-40 object-cover rounded-t-md"
+      class="w-full h-40 object-cover"
     />
 
-    <div class="p-4">
+    <div class="p-4 flex flex-col flex-1">
       <h3 v-if="title" class="text-lg font-semibold text-gray-900">
         {{ title }}
       </h3>
@@ -15,11 +15,17 @@
         {{ description }}
       </p>
 
-      <div class="mt-4">
+      <div class="flex-1 mt-4">
         <slot />
       </div>
 
-      <div v-if="$slots.actions" class="mt-4 flex gap-2">
+      <div
+        v-if="$slots.actions"
+        :class="[
+          footerClasses,
+          'mt-auto flex gap-2 pt-4 border-t border-gray-200',
+        ]"
+      >
         <slot name="actions"></slot>
       </div>
     </div>
@@ -28,7 +34,6 @@
 
 <script setup>
 import { computed } from "vue";
-
 const props = defineProps({
   title: { type: String, default: "" },
   description: { type: String, default: "" },
@@ -36,11 +41,14 @@ const props = defineProps({
   variant: { type: String, default: "elevated" },
   rounded: { type: String, default: "md" },
   shadow: { type: String, default: "md" },
+  footerClasses: { type: String, default: "" },
+  noHover: { type: Boolean, default: false },
 });
 
 const computedClasses = computed(() => {
-  const base =
-    "overflow-hidden transition-transform hover:scale-[.98] duration-200";
+  const base = `overflow-hidden transition-transform ${
+    !props.noHover && "hover:scale-[.98] duration-200"
+  }`;
 
   const variantClasses = {
     elevated: "bg-white shadow-lg border border-gray-200",
@@ -64,8 +72,11 @@ const computedClasses = computed(() => {
     xl: "shadow-xl",
   };
 
-  return `${base} ${variantClasses[props.variant]} ${
-    roundedClasses[props.rounded]
-  } ${shadowClasses[props.shadow]}`;
+  return [
+    base,
+    variantClasses[props.variant],
+    roundedClasses[props.rounded],
+    shadowClasses[props.shadow],
+  ].join(" ");
 });
 </script>

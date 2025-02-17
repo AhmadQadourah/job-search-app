@@ -12,9 +12,9 @@
 
     <div class="flex flex-1 container mx-auto mt-6">
       <!-- 🟡 Sidebar (Filters) -->
-      <div class="w-1/6 p-4 bg-gray-100 rounded-md">
+      <div class="w-1/5 p-4 bg-gray-100 rounded-md">
         <h2 class="text-lg font-semibold mb-3">Filters</h2>
-        <v-input v-model="jobStore.searchQuery" placeholder="Search jobs..." />
+        <v-input v-model="searchInput" placeholder="Search jobs..." />
 
         <label class="block mb-2">
           <span class="text-gray-700">Job Levels</span>
@@ -60,8 +60,15 @@
 <script setup>
 import { watch } from "vue";
 import { useJobStore } from "~/stores/jobStore";
-
+import debounce from "lodash/debounce";
 const jobStore = useJobStore();
-const selectedJobType = ref("");
-const search = ref();
+const searchInput = ref(jobStore.searchQuery);
+
+const debouncedUpdate = debounce((value) => {
+  jobStore.searchQuery = value;
+}, 500);
+
+watch(searchInput, (newValue) => {
+  debouncedUpdate(newValue);
+});
 </script>

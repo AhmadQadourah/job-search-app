@@ -6,6 +6,7 @@ export const useJobStore = defineStore("jobStore", {
     jobsArr: [],
     jobType: "",
     jobLocation: "",
+    favorites: [],
   }),
   getters: {
     jobTypes(state) {
@@ -29,6 +30,25 @@ export const useJobStore = defineStore("jobStore", {
       const jobIds = new Set(this.jobsArr.map((job) => job.id));
       const newJobs = jobs.filter((job) => !jobIds.has(job.id));
       this.jobsArr.push(...newJobs);
+    },
+    loadFavorites() {
+      const storedFavorites = localStorage.getItem("favorites");
+      if (storedFavorites) {
+        this.favorites = JSON.parse(storedFavorites);
+      }
+    },
+    toggleFavorite(job) {
+      const index = this.favorites.findIndex((fav) => fav.id === job.id);
+      if (index === -1) {
+        this.favorites.push(job);
+      } else {
+        this.favorites.splice(index, 1);
+      }
+      this.saveFavorites();
+    },
+
+    saveFavorites() {
+      localStorage.setItem("favorites", JSON.stringify(this.favorites));
     },
   },
 });
