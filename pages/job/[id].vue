@@ -1,6 +1,5 @@
-<
 <template>
-  <div class="container mx-auto p-4">
+  <div class="container mx-auto p-4 max-w-5xl">
     <div v-if="status == 'success'">
       <NuxtLink to="/" class="inline-block mb-4 text-black-500 hover:underline">
         ← Back to Jobs
@@ -26,7 +25,7 @@
             <span class="font-bold"> Publish Date :</span>
             {{ new Date(job.publication_date).toLocaleDateString() }}
           </h6>
-          <div class="my-2" v-html="job.contents"></div>
+          <div class="my-4" v-html="job.contents"></div>
 
           <div class="mt-6">
             <a
@@ -62,4 +61,3 @@ const {
   error,
 } = useFetch(`https://www.themuse.com/api/public/jobs/${jobId}`);
 </script>
->
