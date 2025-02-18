@@ -7,7 +7,17 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  modules: ["@pinia/nuxt"],
+  modules: ["@pinia/nuxt", "@nuxtjs/i18n"],
+  i18n: {
+    locales: [
+      { code: "en", file: "en.json" },
+      { code: "ar", file: "ar.json" },
+    ],
+    defaultLocale: "en",
+    lazy: true,
+    langDir: "locales",
+    strategy: "no_prefix",
+  },
   pinia: {
     autoImports: ["defineStore"],
   },

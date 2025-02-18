@@ -1,32 +1,39 @@
 <template>
+  <div v-if="status1 == 'pending'">
+    <h6>Loading ....</h6>
+  </div>
   <div
-    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 items-stretch"
+    v-else
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch"
   >
     <JobCard v-for="job in filteredJobs" :job="job" :key="job.id" />
   </div>
   <div ref="loadMoreTrigger" class="h-1"></div>
-
-  <!-- <v-button class="w-full" accent="dark" outline @click="loadMoreJobs"
-    >Load more Jobs</v-button
-  > -->
+  <div v-if="!filteredJobs.length && status1 == !'pending'">
+    <noResult />
+  </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watchEffect } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useJobStore } from "~/stores/jobStore";
 
 const jobStore = useJobStore();
 const page = ref(0);
-
+const status1 = ref("pending");
 const fetchJobs = async () => {
   try {
-    const { data } = await useFetch("https://www.themuse.com/api/public/jobs", {
-      query: {
-        page: page.value,
-        api_key:
-          "ebbec8cfc5001cc88004b85141cb7e4227f5ad65b0c758a0a4f0132aaa715cca",
-      },
-    });
+    const { data, status } = await useFetch(
+      "https://www.themuse.com/api/public/jobs",
+      {
+        query: {
+          page: page.value,
+          api_key:
+            "ebbec8cfc5001cc88004b85141cb7e4227f5ad65b0c758a0a4f0132aaa715cca",
+        },
+      }
+    );
+    status1.value = status.value;
 
     if (data.value) {
       jobStore.setJobs(data.value.results);
@@ -67,5 +74,6 @@ onMounted(() => {
     observer.observe(loadMoreTrigger.value);
   }
 });
+
 fetchJobs();
 </script>
