@@ -1,3 +1,4 @@
+<
 <template>
   <div class="container mx-auto p-4">
     <div v-if="status == 'success'">
@@ -40,7 +41,9 @@
       </v-card>
     </div>
 
-    <div v-else-if="status == 'pending'">Loading....</div>
+    <div v-else-if="status == 'pending'">
+      <loader />
+    </div>
     <div v-else class="text-center text-red-500 text-xl py-10">
       Job not found.
     </div>
@@ -59,3 +62,4 @@ const {
   error,
 } = useFetch(`https://www.themuse.com/api/public/jobs/${jobId}`);
 </script>
+>

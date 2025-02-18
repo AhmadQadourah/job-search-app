@@ -1,6 +1,6 @@
 <template>
   <div v-if="status1 == 'pending'">
-    <h6>Loading ....</h6>
+    <loader />
   </div>
   <div
     v-else

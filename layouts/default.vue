@@ -25,14 +25,14 @@
         <div class="flex space-x-4">
           <button
             @click="changeLanguage('en')"
-            :class="locale === 'en' ? 'font-bold' : ''"
+            :class="locale === 'en' ? 'font-bold underline' : ''"
             class="hover:underline transition"
           >
             EN
           </button>
           <button
             @click="changeLanguage('ar')"
-            :class="locale === 'ar' ? 'font-bold' : ''"
+            :class="locale === 'ar' ? 'font-bold underline' : ''"
             class="hover:underline transition"
           >
             العربية
