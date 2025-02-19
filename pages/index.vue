@@ -9,14 +9,14 @@
     <JobCard v-for="job in filteredJobs" :job="job" :key="job.id" />
   </div>
   <div ref="loadMoreTrigger" class="h-1"></div>
-  <div v-if="!filteredJobs.length && status1 == !'pending'">
+  <div v-if="!filteredJobs.length">
     <noResult />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { useJobStore } from "~/stores/jobStore";
+import { useJobStore } from "../stores/jobStore";
 
 const jobStore = useJobStore();
 const page = ref(0);

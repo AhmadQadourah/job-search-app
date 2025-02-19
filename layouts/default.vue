@@ -3,9 +3,8 @@
     :dir="locale === 'ar' ? 'rtl' : 'ltr'"
     class="flex flex-col min-h-screen bg-gray-100"
   >
-    <!-- Header -->
     <header
-      class="bg-gradient-to-r from-slate-700 to-slate-900 text-white py-4 shadow sticky top-0"
+      class="bg-gradient-to-r from-slate-700 to-slate-900 text-white py-4 shadow sticky top-0 z-50"
     >
       <div
         class="container mx-auto flex flex-col sm:flex-row sm:justify-between sm:items-center px-4 gap-2"
@@ -21,7 +20,6 @@
           }}</NuxtLink>
         </nav>
 
-        <!-- Language Switcher -->
         <div class="flex space-x-4">
           <button
             @click="changeLanguage('en')"
@@ -42,11 +40,12 @@
     </header>
 
     <div
-      class="container mx-auto flex-1 flex flex-col md:flex-row mt-6 px-4 gap-6"
+      class="flex flex-1 container mx-auto px-4 gap-6 h-[calc(100vh-4rem)] mt-4"
     >
-      <div class="w-full md:w-1/4 bg-white p-6 rounded-lg shadow flex-shrink-0">
+      <div
+        class="w-full md:w-1/4 bg-white p-6 rounded-lg shadow flex-shrink-0 h-[calc(100vh-5rem)] sticky top-[5rem] overflow-auto"
+      >
         <h2 class="text-xl font-semibold mb-4">{{ t("filters") }}</h2>
-
         <div class="mb-4">
           <v-input
             v-model="searchInput"
@@ -90,7 +89,7 @@
         </div>
       </div>
 
-      <section class="w-full md:flex-1">
+      <section class="w-full md:flex-1 overflow-auto h-full">
         <slot />
       </section>
     </div>
@@ -103,7 +102,7 @@
 
 <script setup>
 import { ref, watch } from "vue";
-import { useJobStore } from "~/stores/jobStore";
+import { useJobStore } from "../stores/jobStore";
 import debounce from "lodash/debounce";
 import { useI18n } from "vue-i18n";
 
@@ -117,7 +116,7 @@ const searchInput = ref(jobStore.searchQuery);
 
 const debouncedUpdate = debounce((value) => {
   jobStore.searchQuery = value;
-}, 500);
+}, 700);
 
 watch(searchInput, (newValue) => {
   debouncedUpdate(newValue);
