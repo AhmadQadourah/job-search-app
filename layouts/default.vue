@@ -22,6 +22,9 @@
           <NuxtLink to="/about" class="hover:underline transition">{{
             t("about")
           }}</NuxtLink>
+          <NuxtLink to="/favorites" class="hover:underline transition">{{
+            t("favorites")
+          }}</NuxtLink>
         </nav>
 
         <!-- Language Switcher -->

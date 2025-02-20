@@ -13,7 +13,7 @@
 
     <div ref="loadMoreTrigger" class="h-1"></div>
 
-    <div v-if="loading" class="text-center mt-2">
+    <div v-if="jobs.length > 0 && loading" class="text-center mt-2">
       <loader />
     </div>
     <div v-if="!filteredJobs.length && !loading">

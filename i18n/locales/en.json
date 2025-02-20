@@ -20,5 +20,8 @@
   "aboutUs": "About Us",
   "aboutDescription": "Your platform for finding the perfect job.",
   "ourMission": "Our Mission",
-  "missionText": "We strive to connect job seekers with top employers, providing an easy and efficient job search experience. Our platform ensures you find the right opportunities that match your skills and career goals."
+  "missionText": "We strive to connect job seekers with top employers, providing an easy and efficient job search experience. Our platform ensures you find the right opportunities that match your skills and career goals.",
+  "favorites": "Favorites",
+  "noFavoritesList": "You have no favorites Yet !",
+  "exploreJobs": "Explore Jobs"
 }

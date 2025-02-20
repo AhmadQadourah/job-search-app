@@ -9,7 +9,18 @@
     </div>
 
     <div v-else>
-      <NuxtLink to="/" class="inline-block mb-4 text-blue-600 hover:underline">
+      <NuxtLink
+        v-if="fromFavorites"
+        to="/favorites"
+        class="inline-block mb-4 text-blue-600 hover:underline"
+      >
+        ← Back to Favorites
+      </NuxtLink>
+      <NuxtLink
+        v-else
+        to="/"
+        class="inline-block mb-4 text-blue-600 hover:underline"
+      >
         ← Back to Jobs
       </NuxtLink>
       <v-card noHover>
@@ -55,15 +66,20 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { memoizeService } from "~/services/memoizeService";
 
 const route = useRoute();
+const router = useRouter();
 const jobId = route.params.id as string;
 
 const jobData = ref<any>(null);
 const loading = ref(true);
 const error = ref<any>(null);
+
+const fromFavorites = computed(() => {
+  return router.options.history.state.back == "/favorites";
+});
 
 onMounted(async () => {
   try {
