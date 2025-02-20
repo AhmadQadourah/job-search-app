@@ -1,75 +1,64 @@
-# Nuxt Minimal Starter
+# Job Search App
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Job Search App is a web application designed to streamline the job search process for users. Built with Nuxt.js, it offers a seamless and efficient experience for job seekers.
 
-## Setup
+## Features
 
-Make sure to install dependencies:
+- **Job Listings**: Browse through a comprehensive list of available job opportunities.
+- **Search Functionality**: Easily find jobs that match your criteria using the search feature.
+- **Responsive Design**: Enjoy a consistent experience across various devices with a mobile-friendly interface.
+- **Adding Favorite**: enjoy adding your favorite Jobs.
+- **Multi Language**: You can select what's your preferred language.
 
-```bash
-# npm
+## Technologies Used
+
+- Nuxt.js, Vue.js ,Tailwind , Pinia
+
+## Getting Started
+
+Follow these instructions to set up and run the project locally.
+
+### Prerequisites
+
+- Node.js
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/AhmadQadourah/job-search-app.git
+
+
+   ```
+
+# 2. Navigate to the project directory:
+
+```
+cd job-search-app
+```
+
+# 3. Install dependencies:
+
+## Using npm
+
 npm install
 
-# pnpm
-pnpm install
+## Using yarn
 
-# yarn
 yarn install
 
-# bun
-bun install
-```
+# Development Server
 
-## Development Server
+## To start the development server:
 
-Start the development server on `http://localhost:3000`:
+### Using npm
 
-```bash
-# npm
 npm run dev
 
-# pnpm
-pnpm dev
+### Using yarn
 
-# yarn
 yarn dev
 
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+The application will be available at http://localhost:3000.
