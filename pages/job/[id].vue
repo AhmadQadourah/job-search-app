@@ -1,35 +1,46 @@
 <template>
   <div class="container mx-auto p-4 max-w-5xl">
-    <div v-if="status == 'success'">
-      <NuxtLink to="/" class="inline-block mb-4 text-black-500 hover:underline">
+    <div v-if="loading">
+      <loader />
+    </div>
+
+    <div v-else-if="error" class="text-center text-red-500 text-xl py-10">
+      {{ error.message || "Job not found." }}
+    </div>
+
+    <div v-else>
+      <NuxtLink to="/" class="inline-block mb-4 text-blue-600 hover:underline">
         ← Back to Jobs
       </NuxtLink>
       <v-card noHover>
         <div class="p-6">
-          <h1 class="text-3xl font-bold mb-2">{{ job.name }}</h1>
+          <h1 class="text-3xl font-bold mb-2">{{ jobData.name }}</h1>
 
           <div class="flex flex-wrap items-center text-gray-600 mb-4 text-sm">
-            <span class="mr-2 font-bold"> {{ job.company.name }}</span>
+            <span class="mr-2 font-bold">{{ jobData.company?.name }}</span>
             <span class="mx-2">|</span>
             <span>{{
-              job.locations[0]?.name || "Location not specified"
+              jobData.locations?.[0]?.name || "Location not specified"
             }}</span>
             <span class="mx-2">|</span>
-            <template v-if="job.levels && job.levels.length">
-              <span class="font-semibold text-gray-800">{{
-                job.levels[0].name
-              }}</span>
-            </template>
+            <span
+              v-if="jobData.levels?.length"
+              class="font-semibold text-gray-800"
+            >
+              {{ jobData.levels[0]?.name }}
+            </span>
           </div>
+
           <h6 class="my-2">
-            <span class="font-bold"> Publish Date :</span>
-            {{ new Date(job.publication_date).toLocaleDateString() }}
+            <span class="font-bold">Publish Date:</span>
+            {{ new Date(jobData.publication_date).toLocaleDateString() }}
           </h6>
-          <div class="my-4" v-html="job.contents"></div>
+
+          <div class="my-4" v-html="jobData.contents"></div>
 
           <div class="mt-6">
             <a
-              :href="job.refs.landing_page"
+              :href="jobData.refs?.landing_page"
               target="_blank"
               class="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             >
@@ -39,25 +50,33 @@
         </div>
       </v-card>
     </div>
-
-    <div v-else-if="status == 'pending'">
-      <loader />
-    </div>
-    <div v-else class="text-center text-red-500 text-xl py-10">
-      Job not found.
-    </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
+import { memoizeService } from "~/services/memoizeService";
 
 const route = useRoute();
-const jobId = route.params.id;
+const jobId = route.params.id as string;
 
-const {
-  data: job,
-  status,
-  error,
-} = useFetch(`https://www.themuse.com/api/public/jobs/${jobId}`);
+const jobData = ref<any>(null);
+const loading = ref(true);
+const error = ref<any>(null);
+
+onMounted(async () => {
+  try {
+    const data = await memoizeService.memoize(
+      `job-${jobId}`,
+      () => $fetch(`https://www.themuse.com/api/public/jobs/${jobId}`),
+      300000
+    );
+    jobData.value = data;
+  } catch (err: any) {
+    error.value = err;
+  } finally {
+    loading.value = false;
+  }
+});
 </script>

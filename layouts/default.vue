@@ -3,15 +3,19 @@
     :dir="locale === 'ar' ? 'rtl' : 'ltr'"
     class="flex flex-col min-h-screen bg-gray-100"
   >
+    <!-- Header -->
     <header
       class="bg-gradient-to-r from-slate-700 to-slate-900 text-white py-4 shadow sticky top-0 z-50"
     >
       <div
         class="container mx-auto flex flex-col sm:flex-row sm:justify-between sm:items-center px-4 gap-2"
       >
-        <h1 class="text-2xl font-bold">{{ t("jobSearch") }}</h1>
+        <h1 class="text-2xl font-bold text-center sm:text-left">
+          {{ t("jobSearch") }}
+        </h1>
 
-        <nav class="flex space-x-6">
+        <!-- Navigation -->
+        <nav class="flex space-x-6 justify-center sm:justify-start">
           <NuxtLink to="/" class="hover:underline transition">{{
             t("home")
           }}</NuxtLink>
@@ -20,7 +24,8 @@
           }}</NuxtLink>
         </nav>
 
-        <div class="flex space-x-4">
+        <!-- Language Switcher -->
+        <div class="flex space-x-4 justify-center sm:justify-start">
           <button
             @click="changeLanguage('en')"
             :class="locale === 'en' ? 'font-bold underline' : ''"
@@ -39,11 +44,13 @@
       </div>
     </header>
 
+    <!-- Main Content -->
     <div
-      class="flex flex-1 container mx-auto px-4 gap-6 h-[calc(100vh-4rem)] mt-4"
+      class="flex flex-1 container mx-auto px-4 gap-6 mt-4 flex-col md:flex-row"
     >
+      <!-- Filters Section -->
       <div
-        class="w-full md:w-1/4 bg-white p-6 rounded-lg shadow flex-shrink-0 h-[calc(100vh-5rem)] sticky top-[5rem] overflow-auto"
+        class="w-full md:w-1/4 bg-white p-6 rounded-lg shadow flex-shrink-0 md:sticky md:top-[5rem] md:h-[calc(100vh-5rem)] md:overflow-auto"
       >
         <h2 class="text-xl font-semibold mb-4">{{ t("filters") }}</h2>
         <div class="mb-4">
@@ -89,11 +96,13 @@
         </div>
       </div>
 
-      <section class="w-full md:flex-1 overflow-auto h-full">
+      <!-- Job List Section -->
+      <section class="w-full md:flex-1 overflow-auto">
         <slot />
       </section>
     </div>
 
+    <!-- Footer -->
     <footer class="bg-gray-800 text-white text-center py-4 mt-auto">
       <p>© 2025 {{ t("jobSearch") }} | {{ t("allRightsReserved") }}</p>
     </footer>
